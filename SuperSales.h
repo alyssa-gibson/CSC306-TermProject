@@ -7,18 +7,19 @@
 
 #ifndef SUPERSALES_H
 #define SUPERSALES_H
-
+#include "Sales.h"
 #include <string>
 
-class SuperSales: public Sales {
+class SuperSales:public Sales {
 public:
     SuperSales();
-    double getCommission() override;
+    SuperSales(const SuperSales& orig);
+    SuperSales(std::string, std::string, std::string, std::string);
+    virtual double getCommission() override;
     virtual ~SuperSales();
-    
-private:
-    double commission;
 };
 
 #endif /* SUPERSALES_H */
+
+
 
