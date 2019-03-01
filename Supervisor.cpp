@@ -6,17 +6,23 @@
  */
 
 #include "Supervisor.h"
-
+#include "Manager.h"
 #include <string>
 
 using namespace std;
 
-Supervisor::Supervisor(string t, string n, string sid, string bid)
-    :Manager(t, n, sid, bid) {
+Supervisor::Supervisor(){
+}
+
+Supervisor::Supervisor(const Supervisor& orig){
+}
+
+Supervisor::Supervisor(string t, string n, string sid, string bid):Manager(t, n, sid, bid) 
+{
     commission = 0;
 }
 
-double Supervisor::getCommission() {
+double Supervisor::getCommission(){
     // Commission calculations go here.
 }
 
