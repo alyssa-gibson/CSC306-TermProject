@@ -7,19 +7,19 @@
 
 #ifndef SUPERVISOR_H
 #define SUPERVISOR_H
-
+#include "Manager.h"
 #include <string>
 
-class Supervisor: public Manager {
+class Supervisor:public Manager {
 public:
+    Supervisor();
+    Supervisor(const Supervisor& orig);
     Supervisor(std::string, std::string, std::string, std::string);
-    double getCommission() override;
+    virtual double getCommission() override;
     virtual ~Supervisor();
-    
-private:
-    double commission;
-    
 };
 
 #endif /* SUPERVISOR_H */
+
+
 
