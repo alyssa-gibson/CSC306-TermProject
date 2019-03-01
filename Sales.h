@@ -7,18 +7,19 @@
 
 #ifndef SALES_H
 #define SALES_H
-
+#include "Employee.h"
 #include <string>
 
-class Sales: public Employee {
+class Sales:public Employee {
 public:
+    Sales();
+    Sales(const Sales& orig);
     Sales(std::string, std::string, std::string, std::string);
-    double getCommission() override;
+    virtual double getCommission() override;
+    bool operator<(const Sales&);
     virtual ~Sales();
-    
-private:
+protected:
     double commission;
-    
 };
 
 #endif /* SALES_H */
