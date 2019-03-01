@@ -7,8 +7,13 @@
 
 #include "Manager.h"
 #include <string>
-
 using namespace std;
+
+Manager::Manager(){
+}
+
+Manager::Manager(const Manager& orig){
+}
 
 Manager::Manager(string t, string n, string sid, string bid):SuperSales(t, n, sid, bid) {
     commission = 0;
