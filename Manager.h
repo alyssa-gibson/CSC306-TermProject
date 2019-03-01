@@ -7,18 +7,17 @@
 
 #ifndef MANAGER_H
 #define MANAGER_H
-
 #include <string>
-
-class Manager: public SuperSales {
+#include "SuperSales.h"
+class Manager:public SuperSales {
 public:
+    Manager();
+    Manager(const Manager& orig);
     Manager(std::string, std::string, std::string, std::string);
-    double getCommission() override;
+    virtual double getCommission() override;
     virtual ~Manager();
-private:
-    double commission;
-  
 };
 
 #endif /* MANAGER_H */
+
 
