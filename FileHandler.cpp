@@ -162,8 +162,8 @@ void FileHandler::readRainbowFile() {
  * adds new pointer to class object that IS an employee to employeePointers
  * vector.
 */
-void FileHandler::addEmployeePointerEntry(Sales *e){
-    Sales *ePt = e;
+void FileHandler::addEmployeePointerEntry(Employee *e){
+    Employee *ePt = e;
     employeePointers.push_back(ePt);
     return;
 }
@@ -181,18 +181,23 @@ void FileHandler::readSalesStaffFile(){
         empTitle = eTitle;
         //If there is no title, do not make a new pointer for the entry
         if(empTitle.empty()){
-            
+
         }
         else 
         {
+
             rFile.getline(ename, 32, ';');
             empName = ename;
             rFile.getline(eSalesID, 32, ';');
             empID = eSalesID;
             rFile.getline(eBossId, 32, ';');
             empBossID = eBossId;
+            if(!rFile.eof())
+            {
+                rFile.ignore(1,'\n');
+            }
             //create pointer to new Employee object
-            Sales *empPtr = nullptr;
+            Employee *empPtr = nullptr;
 
             //uses unique 6th character in eTitle(eTitle[5]) to determine which
             //derived class the pointer will point to
@@ -208,11 +213,11 @@ void FileHandler::readSalesStaffFile(){
                     addEmployeePointerEntry(empPtr);
                     break;        
                 //Manager case    
-                case 'g':
+                case 'e':
                     empPtr = new Manager(empTitle, empName, empID, empBossID);
                     addEmployeePointerEntry(empPtr);
                     break;
-                //case for Sales since it has no normal letter as the 6th character    
+                //Sales case    
                 default:
                     empPtr = new Sales(empTitle, empName, empID, empBossID);
                     addEmployeePointerEntry(empPtr);
@@ -223,6 +228,49 @@ void FileHandler::readSalesStaffFile(){
         }
     }
     rFile.close();
+}
+
+void FileHandler::setEmployeeGrossSales(){
+    for(Employee * employee : employeePointers){
+        double sales = 0;
+        for(Transaction t : transactionVector)
+        {
+            if(t.getSalesPersonID().compare(employee->getSalesID()) == 0)
+            {
+                for(OrderData order : orderVector)
+                {
+                    if(t.getOrderId().compare(order.getId()) == 0)
+                    {
+                        sales += stod(order.getPaidAmount());
+                    }
+                }
+            }
+        }
+        employee->setSales(sales);
+    }
+}
+
+void FileHandler::setEmployeeComission(){
+    for(Employee * employee1 : employeePointers)
+    {
+        double reportedSales = 0;
+        for(Employee * employee2 : employeePointers)
+        {
+            if(employee1->getSalesID().compare(employee2->getBossID()) == 0)
+            {
+                for(Employee * employee3 : employeePointers)
+                {
+                    if(employee2->getSalesID().compare(employee3->getBossID()) == 0)
+                    {
+                        reportedSales += employee3->getSales();
+                    }
+                }
+                reportedSales += employee2->getSales();
+            }
+        }
+
+        employee1->setCommission((employee1->getSales() *0.065) + (reportedSales * 0.03));
+    }
 }
 
 //reads all files and stores the data in the
@@ -290,7 +338,7 @@ vector<string> FileHandler::getRainbowCustVector() {
     return rainbowVector;
 }
 //Returns vector containing pointers to objects that are or inherit from Sales class
-vector<Sales *>FileHandler::getEmployeePointers(){return employeePointers;}
+vector<Employee *>FileHandler::getEmployeePointers(){return employeePointers;}
 
 //Method for sorting employeePointers vector
 //Does not currently work
@@ -301,7 +349,7 @@ void FileHandler::sortEmployees(){
 //destructor for FileHandler, also deletes every pointer to prevent
 //memory leaks and dangling pointers
 FileHandler::~FileHandler() {
-    for(Sales *empPt : employeePointers){
+    for(Employee *empPt : employeePointers){
         delete empPt;
         empPt = nullptr;
     }
