@@ -16,11 +16,14 @@ class Employee {
         Employee(const Employee& orig);
         Employee(std::string, std::string, std::string, std::string);
         virtual double getCommission() = 0;
+        virtual double getSales() = 0;
+        virtual void setCommission(double) = 0;
+        virtual void setSales(double) = 0;
         std::string getTitle(); // returns the Employee's title
         std::string getName(); // returns the Employee's name
         std::string getSalesID(); // returns the Employee's sale ID
         std::string getBossID(); // returns the Employee's boss ID
-        std::string toString();// returns all of the Employee's data
+        virtual std::string toString();// returns all of the Employee's data
         virtual ~Employee();
     protected:
         std::string title;
