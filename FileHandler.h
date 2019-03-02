@@ -27,7 +27,7 @@ private:
     //holds all entries found in rainbowList.txt
     std::vector<std::string> rainbowVector;
     //holds all base class pointers to objects that are derived from Employee
-    std::vector<Sales *> employeePointers;
+    std::vector<Employee *> employeePointers;
 public:
     FileHandler();
     void addOrderEntry(OrderData);
@@ -35,15 +35,17 @@ public:
     void addCustomerEntry(Customer);
     void addRainbowEntry(std::string);
     //Adds new pointer to Employee
-    void addEmployeePointerEntry(Sales *);
+    void addEmployeePointerEntry(Employee *);
     bool removeRainbowEntry(std::string);
+    void setEmployeeGrossSales();
+    void setEmployeeComission();
     OrderData getOrderEntry(int);
     Transaction getTransactionEntry(std::string);
     std::vector<OrderData> getOrderVector();
     std::vector<Transaction> getTransactionVector();
     std::vector<Customer> getCustomerVector();
     std::vector<std::string> getRainbowCustVector();
-    std::vector<Sales *> getEmployeePointers();
+    std::vector<Employee *> getEmployeePointers();
     std::vector<OrderData> getOrders(Customer);
     void readTransactionsFile();
     void readOrdersFile();
