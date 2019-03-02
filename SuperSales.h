@@ -15,7 +15,11 @@ public:
     SuperSales();
     SuperSales(const SuperSales& orig);
     SuperSales(std::string, std::string, std::string, std::string);
+    std::string toString() override;
     virtual double getCommission() override;
+    virtual double getSales() override;
+    virtual void setCommission(double) override;
+    virtual void setSales(double) override;
     virtual ~SuperSales();
 };
 
