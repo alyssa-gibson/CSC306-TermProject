@@ -14,7 +14,11 @@ public:
     Manager();
     Manager(const Manager& orig);
     Manager(std::string, std::string, std::string, std::string);
+    virtual std::string toString() override;
     virtual double getCommission() override;
+    virtual double getSales() override;
+    virtual void setCommission(double) override;
+    virtual void setSales(double) override;
     virtual ~Manager();
 };
 
