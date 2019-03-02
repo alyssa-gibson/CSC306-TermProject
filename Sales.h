@@ -15,11 +15,15 @@ public:
     Sales();
     Sales(const Sales& orig);
     Sales(std::string, std::string, std::string, std::string);
+    std::string toString() override;
     virtual double getCommission() override;
+    virtual double getSales() override;
+    virtual void setCommission(double) override;
+    virtual void setSales(double) override;
     bool operator<(const Sales&);
     virtual ~Sales();
 protected:
-    double commission;
+    double grossSales, commission;
 };
 
 #endif /* SALES_H */
